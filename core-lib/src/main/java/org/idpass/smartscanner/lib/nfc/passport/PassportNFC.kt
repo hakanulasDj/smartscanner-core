@@ -188,20 +188,20 @@ private constructor() {
         private set
 
 
-    init {
-        this.features = FeatureStatus()
-        this.verificationStatus = VerificationStatus()
+  init {
+    this.features = FeatureStatus()
+    this.verificationStatus = VerificationStatus()
 
-        this.random = SecureRandom()
+    this.random = SecureRandom.getInstance("SHA1PRNG") 
 
-        rsaAADigest = MessageDigest.getInstance("SHA1") /* NOTE: for output length measurement only. -- MO */
-        rsaAASignature = Signature.getInstance("SHA1WithRSA/ISO9796-2", BC_PROVIDER)
-        rsaAACipher = Cipher.getInstance("RSA/NONE/NoPadding")
+    rsaAADigest = MessageDigest.getInstance("SHA-256") 
+    rsaAASignature = Signature.getInstance("SHA256withRSA/PSS", BC_PROVIDER)  
+    rsaAACipher = Cipher.getInstance("RSA/OAEPWithSHA-256AndMGF1Padding")  
 
-        /* NOTE: These will be updated in doAA after caller has read ActiveAuthenticationSecurityInfo. */
-        ecdsaAASignature = Signature.getInstance("SHA256withECDSA", BC_PROVIDER)
-        ecdsaAADigest = MessageDigest.getInstance("SHA-256") /* NOTE: for output length measurement only. -- MO */
-    }
+    
+    ecdsaAASignature = Signature.getInstance("SHA256withECDSA", BC_PROVIDER)
+    ecdsaAADigest = MessageDigest.getInstance("SHA-256") 
+}
 
 
     /**
